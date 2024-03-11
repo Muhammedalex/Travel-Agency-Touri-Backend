@@ -30,12 +30,17 @@ class UpdateProfileController extends Controller
 
         // Update the user's profile with the validated data
         $user->update($validatedData);
+        if($request->role){
+            $user->assignRole($request->role);
+        }
         
-        // Refresh the user instance to get the updated information
+        // Refresh the user 
         $user = $user->refresh();
+       
 
         $user->photo ? $user->photo = $user->photo_url: '';
-        $user->save();
+        // $user->save();
+        
         // Build the response data
         $success['user'] = $user;
         $success['success'] = true;

@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Http\Requests\Admin\Data;
+namespace App\Http\Requests\Admin\Employees;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
-class CountryStoreRequest extends FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+class DriverUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
-    {   
-        
+    {
         if($this->user()->can('country create')){return true;}
-        return false;
-    }
+        return false;    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -26,8 +24,42 @@ class CountryStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country' => 'required|unique:countries,country|max:50',
-            'flag' => 'required|unique:countries,flag|max:100'
+            'name' => [
+                'sometimes',
+            ],
+            'mobile' => 'sometimes|unique:users,mobile|digits_between:11,20',
+            'car_model' => [
+                'sometimes',  
+            ],
+            'num_of_seats' => [
+                'sometimes', 
+                'integer', 
+            ],
+            'driver_rate' => [
+                'sometimes', 
+                'integer', 
+            ],
+            'driver_price' => [
+                'sometimes', 
+                'integer', 
+            ],
+            'note' => [
+                'sometimes', 
+                'max:200'
+            ],
+            'share' => [
+                'sometimes', 
+                'integer', 
+            ],
+            'picture'=>[
+                'sometimes',
+                'image'
+            ],
+            'city_id'=>[
+                'sometimes',
+                Rule::exists('cities', 'id'),
+            ],
+            'transportation_id' => 'sometimes|exists:transportations,id',
         ];
     }
 

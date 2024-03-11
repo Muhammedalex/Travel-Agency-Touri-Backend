@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\UpdateProfileController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 Route::middleware('setapplang')->prefix('{locale}')->group(function(){
     Route::post('/auth/register',[RegisterController::class , 'register']);
@@ -25,7 +26,7 @@ Route::middleware('setapplang')->prefix('{locale}')->group(function(){
 
 Route::middleware(['auth:sanctum','setapplang'])->prefix('{locale}')->group(function () {
     Route::get('/auth/profile',function(Request $request){
-        return $request->user();
+        return Auth::guard('sanctum')->user();
     });
     Route::post('/auth/logout', [LoginController::class, 'logout']);
 

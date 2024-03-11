@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Requests\Admin\Data;
+namespace App\Http\Requests\Booking\Accommodation;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CountryStoreRequest extends FormRequest
+class AccommodationStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
-    {   
-        
-        if($this->user()->can('country create')){return true;}
+    {
+        if ($this->user()->can('country create')) {
+            return true;
+        }
         return false;
     }
 
@@ -24,12 +26,24 @@ class CountryStoreRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
-        return [
-            'country' => 'required|unique:countries,country|max:50',
-            'flag' => 'required|unique:countries,flag|max:100'
-        ];
-    }
+{
+    return [
+        'name' => [
+            'sometimes',
+            // Rule::unique('accommodations', 'name'),
+        ],
+        'mobile' => 'sometimes|digits_between:11,20|unique:accommodations,mobile',
+        'email' => 'required|unique:accommodations,email',
+        'address' => 'required',
+        'rate' => 'sometimes',
+        'video' => 'sometimes',
+        'note' => 'sometimes|max:200',
+        'share' => 'sometimes',
+        'cover' => 'required|image',
+        'type' => 'required|exists:accommodation_types,type',
+        'city_id' => 'required|exists:cities,id',
+    ];
+}
 
     protected function failedValidation(Validator $validator)
     {

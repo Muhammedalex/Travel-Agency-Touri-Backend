@@ -32,6 +32,7 @@ trait ImageProccessing{
         $str_random = Str::random(8);
         $imgPath = $str_random.time().$ext;
         $img->save(storage_path('app/imagesfp').'/'.$imgPath);
+        // $fullUrl = url('imagesfp/' . $imgPath);
 
         return $imgPath ;
     }
@@ -77,7 +78,7 @@ trait ImageProccessing{
     //    public function saveImgAndThumbnail($Thefile,$thumb = false)
     //    {
     //         $dataX = array();
-    //         $dataX['image']=$this->saveImage($Thefile);
+    //         $dataX['image']=$this->saveImage($Thefile ,$ext);
 
     //         if($thumb){
     //             $dataX['thumbnailsm']=$this->aspect4resize($Thefile,256,144);
@@ -92,10 +93,13 @@ trait ImageProccessing{
 
        public function deleteImage($filePath)
        {
-            if(is_file(Storage::disk('imagesfp')->exists($filePath))){
-                if(file_exists(Storage::disk('imagesfp')->exists($filePath))){
-                    unlink(Storage::disk('imagesfp')->delete($filePath));
-                }
-            }        
+            // if(is_file(Storage::disk('imagesfp')->exists($filePath))){
+            //     if(file_exists(Storage::disk('imagesfp')->exists($filePath))){
+            //         unlink(Storage::disk('imagesfp')->delete($filePath));
+            //     }
+            // }     
+            if (Storage::disk('imagesfp')->exists($filePath)) {
+                // Delete the file
+                Storage::disk('imagesfp')->delete($filePath);   }
        }
     }

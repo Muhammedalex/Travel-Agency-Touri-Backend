@@ -15,6 +15,7 @@ class RegisterController extends Controller
         $newUser = $request->validated();
         $newUser['password'] = Hash::make($newUser['password']);
         $user = User::create($newUser);
+        $user->assignRole($user->role);
         $user->notify(new EmailVerificationNotification());
         return response(['message'=>'user created successfully','user'=>$user],201);
     }
