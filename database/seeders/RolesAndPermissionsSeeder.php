@@ -16,6 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         $arrOfPermissionNames = [
             'country create' , 'country view' , 'country edit' ,'country delete',
+            'city create' , 'city view' , 'city edit' ,'city delete',
             'admin only' , 'user view'
         ];
         $permissions = collect($arrOfPermissionNames)->map(function($permisson){

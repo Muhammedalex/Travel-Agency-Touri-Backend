@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin\Data;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CountryUpdateRequest extends FormRequest
 {
@@ -24,8 +25,14 @@ class CountryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country' => 'required|unique:countries,country,'.$this->country_id,
-            'flag' => 'required|unique:countries,flag,'.$this->country_id,
+            'country' => [
+                'required',
+                Rule::unique('countries', 'country')->ignore($this->route('country')),
+            ],
+            'flag' => [
+                'required',
+                Rule::unique('countries', 'flag')->ignore($this->route('country')),
+            ],
         ];
     }
 

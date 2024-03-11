@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Roles;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RolesUpdateRequest extends FormRequest
 {
@@ -28,7 +29,10 @@ protected function failedAuthorization(){
         return [
             'permissions' => ['required'],
             'permissions.*' => ['exists:permissions,name'],
-            'role' => ['required', 'unique:roles,name,'. $this->role_id, 'max:60'],
+            'role' => [
+                'required',
+                Rule::unique('roles', 'name')->ignore($this->route('role_permission')),
+            ],
         ];
     }
 }

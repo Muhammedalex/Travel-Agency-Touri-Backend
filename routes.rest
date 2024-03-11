@@ -1,0 +1,38 @@
+######login super admin #########3
+POST http://127.0.0.1:8000/api/en/auth/login
+Accept: application/vnd.api+json 
+Content-Type: application/vnd.api+json 
+
+{
+    "email":"admin@admin.com",
+    "password":"123456"
+}
+############### transportation########
+
+
+POST http://127.0.0.1:8000/api/en/admin/transportation
+Accept: application/vnd.api+json 
+Content-Type: application/vnd.api+json 
+Authorization: Bearer 1|T0yUfvDxM1KBFvr4OddgzoE9beHjG7dfCKqClhNmed0926c8
+
+{
+    "type":"BMW"
+}
+###################
+
+GET http://127.0.0.1:8000/api/ar/admin/transportation/4
+Accept: application/vnd.api+json 
+# Content-Type: application/vnd.api+json 
+Authorization: Bearer 1|T0yUfvDxM1KBFvr4OddgzoE9beHjG7dfCKqClhNmed0926c8
+
+################### PRice Trans##############
+POST http://127.0.0.1:8000/api/en/admin/transprice
+Accept: application/vnd.api+json 
+Content-Type: application/vnd.api+json 
+Authorization: Bearer 1|T0yUfvDxM1KBFvr4OddgzoE9beHjG7dfCKqClhNmed0926c8
+
+{
+    "price":"300",
+    "country_id":"1",
+    "transportation_id":"1"
+}

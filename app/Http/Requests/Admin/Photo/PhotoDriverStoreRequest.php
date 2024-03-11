@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Http\Requests\Admin\Data;
+namespace App\Http\Requests\Admin\Photo;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-
-class CountryStoreRequest extends FormRequest
+use Illuminate\Foundation\Http\FormRequest;
+class PhotoDriverStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
-    {   
-        
+    {
         if($this->user()->can('country create')){return true;}
-        return false;
+        return false;  
     }
 
     /**
@@ -26,8 +25,13 @@ class CountryStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country' => 'required|unique:countries,country|max:50',
-            'flag' => 'required|unique:countries,flag|max:100'
+            'car_photo.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'driver_id'=>[
+            //     'required',
+            //     Rule::exists('drivers', 'id'),
+            // ]
+          
+
         ];
     }
 

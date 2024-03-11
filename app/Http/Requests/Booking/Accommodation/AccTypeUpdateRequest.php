@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Requests\Admin\Data;
+namespace App\Http\Requests\Booking\Accommodation;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CountryStoreRequest extends FormRequest
+class AccTypeUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
-    {   
-        
+    {
         if($this->user()->can('country create')){return true;}
         return false;
     }
@@ -26,8 +26,11 @@ class CountryStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country' => 'required|unique:countries,country|max:50',
-            'flag' => 'required|unique:countries,flag|max:100'
+            'type' => [
+                'required',
+                // Rule::unique('accommodation_types', 'type')->ignore($this->route('accomodationType')),
+            ],
+        
         ];
     }
 
